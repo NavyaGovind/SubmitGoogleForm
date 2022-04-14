@@ -1,19 +1,25 @@
-let url = "https://docs.google.com/forms/d/e/1FAIpQLSejzmFmE8b2CidvukmZ6Y4ZjMxnkesZlZ6LX6rKr1XsJGRHIg/formResponse?usp=pp_url&entry.768086295=Hey+guy+Im+bing+chilling";
-
+/**
+ * Used to submit the google form at a given time
+ * Note: From running it on my computer, the loop takes about 2 milliseconds to execute
+ */
 function submitEntryToGoogleForm(matchMonth, matchDate, matchHour, matchMinute) {
-// responses submitted every 2 milliseconds
-  while (true){
-    let d = getCurrentDateAndTime();
-    month = d.getUTCMonth() + 1
-    date = d.getUTCDate().toString()
-    // UTC to local time
-    hour = d.getUTCHours() + 2
-    hour = hour.toString()
-    minute = d.getUTCMinutes().toString()
+  while (true) {
+    let d = getCurrentUTCDateAndTime();
+    Logger.log("logging time " + d + " //");
+    printCurrentDateAndTime();
+    month = d.getMonth()
+    date = d.getDate()
+    hour = d.getHours()
+    minute = d.getMinutes()
+//    Logger.log(month.toString() + matchMonth.toString());
+//    Logger.log(date.toString() + matchDate.toString());
+//    Logger.log(hour.toString() + matchHour.toString());
+//    Logger.log(minute.toString() + matchMinute.toString());
     if (month == matchMonth & date == matchDate & hour == matchHour & minute == matchMinute){
       break;
     }
   }
   let response = UrlFetchApp.fetch(url);
-  Logger.log("form submitted at" + getCurrentDateAndTime())
+  Logger.log("form submitted at")
+  printCurrentDateAndTime();
 }

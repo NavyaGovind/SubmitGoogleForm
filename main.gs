@@ -1,9 +1,10 @@
+let url = "https://docs.google.com/forms/d/e/1FAIpQLSejzmFmE8b2CidvukmZ6Y4ZjMxnkesZlZ6LX6rKr1XsJGRHIg/formResponse?usp=pp_url&entry.768086295=Hey+guy+Im+bing+chilling";
+
 function main() {
-  month = 4
-  date = 9
-  hours = 13
-  minutes = 33
-  Logger.log(getCurrentUTCDateAndTime());
-  Logger.log(getCurrentUTCDateAndTime());
-  //submitEntryToGoogleForm(month, date, hours, minutes);
+  printCurrentDateAndTime();
+  month = 3
+  date = 14
+  hours = 20
+  minutes = 29
+  submitEntryToGoogleForm(month, date, hours, minutes);
 }
