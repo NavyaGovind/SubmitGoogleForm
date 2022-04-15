@@ -29,7 +29,6 @@ function convertNumberToDateAndTime(num) {
   // ensure there are at least 13 numbers by appending zeroes
   while (numArray.length < 13) {
     numArray.push(0);
-    Logger.log(numArray.length.toString())
   }
 
   let idx = 0;
@@ -40,8 +39,7 @@ function convertNumberToDateAndTime(num) {
   } else {
     month = numArray[idx]
     idx = idx + 1;
-  } 
-  Logger.log(month);
+  }
   
   // get date
   maxDays = getDaysInMonth(month, 2022)
@@ -54,7 +52,6 @@ function convertNumberToDateAndTime(num) {
     date = numArray[idx]
     idx = idx + 1;
   }
-  Logger.log(date);
   
   // get hours
   if (numArray[idx] <= 2 && numArray[idx+1] <= 23) {
@@ -64,7 +61,6 @@ function convertNumberToDateAndTime(num) {
     hours = numArray[idx]
     idx = idx + 1;
   }
-  Logger.log(hours);
 
   // get minutes
   if (numArray[idx] <= 5 && numArray[idx+1] <= 9) {
@@ -74,7 +70,6 @@ function convertNumberToDateAndTime(num) {
     minutes = numArray[idx]
     idx = idx + 1;
   }
-  Logger.log(minutes);
 
   // get seconds
   if (numArray[idx] <= 5 && numArray[idx+1] <= 9) {
@@ -84,13 +79,9 @@ function convertNumberToDateAndTime(num) {
     seconds = numArray[idx]
     idx = idx + 1;
   }
-  Logger.log(seconds);
 
   // get milliseconds
   milliseconds = numArray[idx]*100+numArray[idx+1]*10+numArray[idx+2]
-  Logger.log(milliseconds);
-
-  
 }
 
 /**
@@ -117,12 +108,28 @@ function printCurrentDateAndTime() {
   let day = getDayName(d.getDay());
   // UTC to local time
   let hour = d.getUTCHours() + 2;
+  if (hour < 10) {
+    hour = "0" + hour.toString();
+  }
   hour = hour.toString();
-  let minute = d.getUTCMinutes().toString();
-  let second = d.getUTCSeconds().toString();
+  let minute = d.getUTCMinutes();
+  if (minute < 10) {
+    minute = "0" + minute.toString();
+  }
+  minute = minute.toString();
+  let second = d.getUTCSeconds();
+  if (second < 10) {
+    second = "0" + second.toString();
+  }
+  second = second.toString();
   let millisecond = d.getUTCMilliseconds().toString();
+  millisecond = "12"
+  Logger.log(millisecond.length)
+  while (millisecond.length < 3) {
+    millisecond = "0" + millisecond
+  }
   Logger.log(day + " " + date + " " + month + " " + year +  " "  + hour +  ":" + minute + ":" +  second + ":" +  millisecond);
-  Logger.log(dateLocaleStr);
+  //Logger.log(dateLocaleStr);
 }
 
 /**
@@ -130,34 +137,8 @@ function printCurrentDateAndTime() {
  * Note: The months start at 0
  */
 function getMonthName(monthNumber) {
-  switch(monthNumber) {
-  case 0:
-    return "January"
-  case 1:
-    return "February"
-  case 2:
-    return "March"
-  case 3:
-    return "April"
-  case 4:
-    return "May"
-  case 5:
-    return "June"
-  case 6:
-    return "July"     
-  case 7:
-    return "August"
-  case 8:
-    return "September"
-  case 9:
-    return "October"
-  case 10:
-    return "November"
-  case 11:
-    return "December" 
-  default:
-    return "Something went wrong when assigning the month"
-  } 
+  const monthNum = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+  return monthNum[monthNumber];
 }
 
 /**
@@ -165,22 +146,6 @@ function getMonthName(monthNumber) {
  * Note: The days start at 0
  */
 function getDayName(dayNumber) {
-  switch(dayNumber) {
-  case 0:
-    return "Sunday"
-  case 1:
-    return "Monday"
-  case 2:
-    return "Tuesday"
-  case 3:
-    return "Wednesday"
-  case 4:
-    return "Thursday"
-  case 5:
-    return "Friday"
-  case 6:
-    return "Saturday"
-  default:
-    return "Something went wrong when assigning the day"
-  } 
+  const dayNum = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+  return dayNum[dayNumber];
 }

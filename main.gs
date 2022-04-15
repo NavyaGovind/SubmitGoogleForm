@@ -6,6 +6,9 @@ function main() {
   date = 14
   hours = 20
   minutes = 29
+  timezone = 4
+ // Logger.log(getMonthName(11));
   convertNumberToDateAndTime(000000000022845)
+ // Logger.log(printCurrentDateAndTime());
   //submitEntryToGoogleForm(month, date, hours, minutes);
 }
