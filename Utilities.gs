@@ -12,6 +12,8 @@ function convertUTCtoTZ(d, tz) {
   d.setMinutes(newMinutes)
 
   year = d.getUTCFullYear().toString()
+  // javascript date object to ISO standard conversion
+  d.setMonth(d.getMonth()+1)
   month = padWithZeroes(2, d.getMonth().toString())
   date = padWithZeroes(2, d.getDate().toString());
   hour = padWithZeroes(2, d.getHours().toString())
@@ -48,41 +50,42 @@ function convertNumberToDateAndTime(num) {
   let idx=0;
   let d = new Date();
 
-  result = accessArr(idx, numArray, 1, 2)
-  d.setMonth(result[1]-1);
-  Logger.log(result)
+  d.setFullYear(d.getUTCFullYear())
+
+  result = checkMaxInArr(idx, numArray, 12)
+  if (result[1]-1 <= -1) {
+    throw new Error("Month value can't be 0. Enter a valid date time number!");
+  } else {
+    d.setMonth(result[1]-1);
+  }
   
   maxDays = getDaysInMonth(result[1], d.getUTCFullYear())
-  Logger.log(maxDays)
-  result = accessArr(result[0], numArray, parseInt(maxDays/10), maxDays%10)
-  d.setDate(result[1])
-  Logger.log(result)
-  
-  
-  result = accessArr(result[0], numArray, 2, 3)
-  d.setHours(result[1])
-  Logger.log(result)
-  
+  result = checkMaxInArr(result[0], numArray, maxDays)
+  if (result[1] <= 0) {
+    throw new Error("Date value can't be 0. Enter a valid date time number!");
+  } else {
+    d.setDate(result[1])
+  }
 
-  result = accessArr(result[0], numArray, 5, 9)
+  result = checkMaxInArr(result[0], numArray, 23)
+  d.setHours(result[1])
+
+  result = checkMaxInArr(result[0], numArray, 59)
   d.setMinutes(result[1])
 
-Logger.log(result)
-  
-  result = accessArr(result[0], numArray, 5, 9)
+  result = checkMaxInArr(result[0], numArray, 59)
   d.setSeconds(result[1])
 
-Logger.log(result)
-  
   idx = result[0]
   d.setMilliseconds(numArray[idx]*100+numArray[idx+1]*10+numArray[idx+2])
-
-
   return d;
 }
 
-function accessArr(idx, arr, max1, max2) {
-  if (arr[idx] <= max1 && arr[idx+1] <= max2) {
+/**
+ * Checks if two consecutive indices in the given array are less than the max
+ */
+function checkMaxInArr(idx, arr, max) {
+  if (arr[idx]*10+arr[idx+1] <= max) {
     return [idx + 2, arr[idx]*10+arr[idx+1]]
   } else {
     return [idx + 1, arr[idx]]
@@ -111,16 +114,6 @@ function getMonthName(monthNumber) {
 }
 
 /**
- * Splits a string into array cells
- */
-function strToArr(str) {
-  var arr = String(str).split("").map((str)=>{
-  return String(str)
-  })
-  return arr;
-}
-
-/**
  * Takes the day in numbers and returns the day as a string
  * Note: The days start at 0
  */
@@ -137,4 +130,21 @@ function padWithZeroes(len, str) {
     str = "0" + str
   }
   return str
+}
+
+/**
+ * Print js date without timezone
+ */
+function printDateWithoutTZ(date) {
+  return date.toString().slice(0,25)
+}
+
+/**
+ * Splits a string into array cells
+ */
+function strToArr(str) {
+  var arr = String(str).split("").map((str)=>{
+  return String(str)
+  })
+  return arr;
 }

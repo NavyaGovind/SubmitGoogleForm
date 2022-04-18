@@ -1,8 +1,12 @@
+/**
+ * Main function used to insert the target time and submitting google form at target time
+ */
 function main() {
-  var response = UrlFetchApp.fetch("http://worldtimeapi.org/api/timezone/" + timeZone);
-  var content = JSON.parse(response.getContentText());
-  let utcOffset = new TimeZone(content.utc_offset)
- // utcOffset.printTZ()
-  let timeInTZ = convertUTCtoTZ(new Date(), utcOffset)
-  Logger.log(convertNumberToDateAndTime(pi));
+  var targetTime;
+  if (dtInNumber == 1) {
+    targetTime = convertNumberToDateAndTime(dateNum)
+  } else {
+    targetTime = new Date(dateStr)
+  }
+  submitEntryToGoogleForm(targetTime)
 }
