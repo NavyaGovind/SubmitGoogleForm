@@ -1,23 +1,27 @@
 /**
  * Used to submit the google form at a given time
- * Note: From running it on my computer, the loop takes about 2 milliseconds to execute
  */
 function submitEntryToGoogleForm(matchMonth, matchDate, matchHour, matchMinute) {
+  let timeElapsed = 0;
   while (true) {
+    let start = Date.now();
     let d = getCurrentUTCDateAndTime();
-    Logger.log("logging time " + d + " //");
-    printCurrentDateAndTime();
+    if (timeElapsed >= 60000) {
+      Logger.log("The current time is - ")
+      printCurrentDateAndTime();
+      Logger.log("The form will be submitted at - ")
+      Logger.log(matchDate + " " + matchMonth + " 2022 "  + matchHour +  ":" + matchMinute + ":00:000");
+      timeElapsedInLoop = 0
+    }
     month = d.getMonth()
     date = d.getDate()
     hour = d.getHours()
     minute = d.getMinutes()
-//    Logger.log(month.toString() + matchMonth.toString());
-//    Logger.log(date.toString() + matchDate.toString());
-//    Logger.log(hour.toString() + matchHour.toString());
-//    Logger.log(minute.toString() + matchMinute.toString());
     if (month == matchMonth & date == matchDate & hour == matchHour & minute == matchMinute){
       break;
     }
+    let end = Date.now();
+    timeElapsed = timeElapsed + end - start
   }
   let response = UrlFetchApp.fetch(url);
   Logger.log("form submitted at")

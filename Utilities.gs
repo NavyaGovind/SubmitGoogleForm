@@ -1,13 +1,27 @@
-function getCurrentUTCDateAndTime() {
-  let d = new Date();
-  return UTCtoCET(d);
-}
+/**
+ * Convert the given UTC date time to the given timezone's time
+ */
+function convertUTCtoTZ(d, tz) {
+  if (tz.sym == "-") {
+    tz.hourOffset = -1 * tz.hourOffset;
+    tz.minuteOffset = -1 * tz.minuteOffset;
+  }
+  newHours = d.getUTCHours() + tz.hourOffset
+  newMinutes = d.getUTCMinutes() + tz.minuteOffset
+  d.setHours(newHours)
+  d.setMinutes(newMinutes)
 
-function UTCtoCET(utc) {
-  utchour = utc.getUTCHours();
-  cethour = utchour + 2;
-  utc.setHours(cethour);
-  return utc
+  year = d.getUTCFullYear().toString()
+  month = padWithZeroes(2, d.getMonth().toString())
+  date = padWithZeroes(2, d.getDate().toString());
+  hour = padWithZeroes(2, d.getHours().toString())
+  minute = padWithZeroes(2, d.getMinutes().toString())
+  second = padWithZeroes(2, d.getUTCSeconds().toString())
+  millisecond = padWithZeroes(3, d.getUTCMilliseconds().toString())
+  
+  let dateStr = year + "-" + month + "-" + date + "T" + hour + ":" + minute + ":" + second + "." + millisecond;
+  let convDT = new Date(dateStr);
+  return convDT;
 }
 
 /**
@@ -31,57 +45,48 @@ function convertNumberToDateAndTime(num) {
     numArray.push(0);
   }
 
-  let idx = 0;
-  // get month
-  if (numArray[idx] <= 1 && numArray[idx+1] <= 2) {
-    month = numArray[idx]*10+numArray[idx+1]
-    idx = idx + 2;
-  } else {
-    month = numArray[idx]
-    idx = idx + 1;
-  }
+  let idx=0;
+  let d = new Date();
+
+  result = accessArr(idx, numArray, 1, 2)
+  d.setMonth(result[1]-1);
+  Logger.log(result)
   
-  // get date
-  maxDays = getDaysInMonth(month, 2022)
-  maxDay2 = maxDays%10;
-  maxDay1 = parseInt(maxDays/10);
-  if (numArray[idx] <= maxDay1 && numArray[idx+1] <= maxDay2) {
-    date = numArray[idx]*10+numArray[idx+1]
-    idx = idx + 2;
-  } else {
-    date = numArray[idx]
-    idx = idx + 1;
-  }
+  maxDays = getDaysInMonth(result[1], d.getUTCFullYear())
+  Logger.log(maxDays)
+  result = accessArr(result[0], numArray, parseInt(maxDays/10), maxDays%10)
+  d.setDate(result[1])
+  Logger.log(result)
   
-  // get hours
-  if (numArray[idx] <= 2 && numArray[idx+1] <= 23) {
-    hours = numArray[idx]*10+numArray[idx+1]
-    idx = idx + 2;
-  } else {
-    hours = numArray[idx]
-    idx = idx + 1;
-  }
+  
+  result = accessArr(result[0], numArray, 2, 3)
+  d.setHours(result[1])
+  Logger.log(result)
+  
 
-  // get minutes
-  if (numArray[idx] <= 5 && numArray[idx+1] <= 9) {
-    minutes = numArray[idx]*10+numArray[idx+1]
-    idx = idx + 2;
-  } else {
-    minutes = numArray[idx]
-    idx = idx + 1;
-  }
+  result = accessArr(result[0], numArray, 5, 9)
+  d.setMinutes(result[1])
 
-  // get seconds
-  if (numArray[idx] <= 5 && numArray[idx+1] <= 9) {
-    seconds = numArray[idx]*10+numArray[idx+1]
-    idx = idx + 2;
-  } else {
-    seconds = numArray[idx]
-    idx = idx + 1;
-  }
+Logger.log(result)
+  
+  result = accessArr(result[0], numArray, 5, 9)
+  d.setSeconds(result[1])
 
-  // get milliseconds
-  milliseconds = numArray[idx]*100+numArray[idx+1]*10+numArray[idx+2]
+Logger.log(result)
+  
+  idx = result[0]
+  d.setMilliseconds(numArray[idx]*100+numArray[idx+1]*10+numArray[idx+2])
+
+
+  return d;
+}
+
+function accessArr(idx, arr, max1, max2) {
+  if (arr[idx] <= max1 && arr[idx+1] <= max2) {
+    return [idx + 2, arr[idx]*10+arr[idx+1]]
+  } else {
+    return [idx + 1, arr[idx]]
+  }
 }
 
 /**
@@ -97,42 +102,6 @@ function getDaysInMonth(month, year) {
 }
 
 /**
- * Print the current date and time
- */
-function printCurrentDateAndTime() {
-  let d = new Date();
-  let dateLocaleStr  = d.toLocaleString('nl-NL', { timeZone: 'CET' });
-  let year = d.getFullYear().toString();
-  let month = getMonthName(d.getUTCMonth());
-  let date = d.getUTCDate().toString();
-  let day = getDayName(d.getDay());
-  // UTC to local time
-  let hour = d.getUTCHours() + 2;
-  if (hour < 10) {
-    hour = "0" + hour.toString();
-  }
-  hour = hour.toString();
-  let minute = d.getUTCMinutes();
-  if (minute < 10) {
-    minute = "0" + minute.toString();
-  }
-  minute = minute.toString();
-  let second = d.getUTCSeconds();
-  if (second < 10) {
-    second = "0" + second.toString();
-  }
-  second = second.toString();
-  let millisecond = d.getUTCMilliseconds().toString();
-  millisecond = "12"
-  Logger.log(millisecond.length)
-  while (millisecond.length < 3) {
-    millisecond = "0" + millisecond
-  }
-  Logger.log(day + " " + date + " " + month + " " + year +  " "  + hour +  ":" + minute + ":" +  second + ":" +  millisecond);
-  //Logger.log(dateLocaleStr);
-}
-
-/**
  * Takes the month in numbers and returns the month as a string
  * Note: The months start at 0
  */
@@ -142,10 +111,30 @@ function getMonthName(monthNumber) {
 }
 
 /**
+ * Splits a string into array cells
+ */
+function strToArr(str) {
+  var arr = String(str).split("").map((str)=>{
+  return String(str)
+  })
+  return arr;
+}
+
+/**
  * Takes the day in numbers and returns the day as a string
  * Note: The days start at 0
  */
 function getDayName(dayNumber) {
   const dayNum = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
   return dayNum[dayNumber];
+}
+
+/**
+ * Append the starting of the str with zeroes until str is len long
+ */
+function padWithZeroes(len, str) {
+  while (str.length < len) {
+    str = "0" + str
+  }
+  return str
 }
