@@ -24,7 +24,7 @@ I used Google App Scripts to run this. I'm not sure if there's a way to submit t
 
 - Also, the examples above only dealt with textual responses in the google form but you might have to pick some options in the form. In those cases, you simply follow a similar procedure as above. Instead of writing your response (as `entry.ID=response`), you'd write `entry.ID=Option+1&entry.ID2=Option+1`. Another random example - https://docs.google.com/forms/d/e/1FAIpQLSfhMfnx00m1A_n5RysUgVklqqD_wNFX4cWFsGcbgutKPfkNbQ/viewform?usp=pp_url&entry.806606999=ewewewew&entry.1239433641=eqwe&entry.2086571612=Option+1&entry.1691435913=Option+1&entry.903059671=Option+1
 
-Once you have your pre filled url, replace it in the `Variables.gs` file (preFilledURL). Additionally, make sure to provide a response for all the required fields. As of right now, there is no way to know if your form was successfully submitted or not.
+Once you have your pre filled url, replace it in the `Variables.gs` file (preFilledURL). Additionally, make sure to provide a response for all the required fields. As of right now, there is no way to know if your form was successfully submitted or not. This is something that I'm currently working on.
 
 ### Step 2: Timezone
 Find your timezone from the following list - http://worldtimeapi.org/api/timezone/. Some examples of timezones include - "Europe/Amsterdam", "Asia/Dubai". Once you have your timezone, replace it in the `Variables.gs` file (timeZone)
