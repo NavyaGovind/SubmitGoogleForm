@@ -5,6 +5,7 @@ function submitEntryToGoogleForm(dtarget) {
   let dtargetTime = dtarget.getTime();
   let totalTimeElapsed = 0;
   let timeElapsed = maxLoopTime;
+  let submitted = false;
   while (totalTimeElapsed < maxTotalLoopTime) {
     let start = Date.now();
     if (timeElapsed >= maxLoopTime) {
@@ -13,9 +14,14 @@ function submitEntryToGoogleForm(dtarget) {
     }
     let dnow = convertUTCtoTZ(new Date(), utcOffset)
     if (dnow.getTime() === dtargetTime) {
-      let response = UrlFetchApp.fetch(preFilledURL);
-      if (response.getResponseCode() == 200) {
-        Logger.log("Google form submitted at" + printDateWithoutTZ(convertUTCtoTZ(new Date(), utcOffset)));
+      try {
+        let response = UrlFetchApp.fetch(preFilledURL);
+        if (response.getResponseCode() == 200) {
+          Logger.log("Google form submitted at " + printDateWithoutTZ(convertUTCtoTZ(new Date(), utcOffset)));
+        }
+      submitted = true;
+      } catch (error) {
+        throw new Error("You may not have provided the correct prefilled URL. Make sure the entry IDs are correct and all required parts have a response");
       }
       break;
     }
@@ -26,5 +32,7 @@ function submitEntryToGoogleForm(dtarget) {
     timeElapsed = timeElapsed + end - start
     totalTimeElapsed = totalTimeElapsed + end - start
   }
-  throw new Error("Total time trying to submit has exceeded the max. You can rerun when you're closer to the target time or edit the max (mazTotalLoopTime) in the variables file");
+  if (!submitted) {
+    throw new Error("Total time trying to submit has exceeded the max. You can rerun when you're closer to the target time or edit the max (mazTotalLoopTime) in the variables file");
+  }
 }

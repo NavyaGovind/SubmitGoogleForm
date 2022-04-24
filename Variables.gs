@@ -9,9 +9,9 @@ const timeZone = "Europe/Amsterdam"
 const utcOffset = new TimeZone(JSON.parse(UrlFetchApp.fetch("http://worldtimeapi.org/api/timezone/" + timeZone).getContentText()).utc_offset);
 const maxLoopTime = 30000 // in milliseconds
 const maxTotalLoopTime = 300000 // in milliseconds
-const dtInNumber = 1 // 1 if you want to submit a number as time and 0 if you want to submit in ISO 8601 date and time format 
+const dtInNumber = 0 // 1 if you want to submit a number as time and 0 if you want to submit in ISO 8601 date and time format 
 const dateNum = 112233445566
-const dateStr = "2022-04-18T22:06:59.368"
+const dateStr = "2022-04-24T11:51:00.368"
 
 /**
  * HOW TO ISO 8601 date and time format
