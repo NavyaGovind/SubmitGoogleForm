@@ -3,12 +3,11 @@
  */
 function submitEntryToGoogleForm(dtarget) {
   let dtargetTime = dtarget.getTime();
-  let totalTimeElapsed = 0;
-  let timeElapsed = maxLoopTime;
+  let timeElapsed = updateTime;
   let submitted = false;
-  while (totalTimeElapsed < maxTotalLoopTime) {
+  while (true) {
     let start = Date.now();
-    if (timeElapsed >= maxLoopTime) {
+    if (timeElapsed >= updateTime) {
       Logger.log("Current time - " + printDateWithoutTZ(convertUTCtoTZ(new Date(), utcOffset)) + " Submission time - " + printDateWithoutTZ(dtarget))
       timeElapsed = 0
     }
@@ -30,7 +29,6 @@ function submitEntryToGoogleForm(dtarget) {
     }
     let end = Date.now();
     timeElapsed = timeElapsed + end - start
-    totalTimeElapsed = totalTimeElapsed + end - start
   }
   if (!submitted) {
     throw new Error("Total time trying to submit has exceeded the max. You can rerun when you're closer to the target time or edit the max (mazTotalLoopTime) in the variables file");
