@@ -14,6 +14,7 @@ I used Google App Scripts to run this. I'm not sure if there's a way to submit t
 
 ![image](https://user-images.githubusercontent.com/76686946/164062352-fdc29dac-41c9-418f-a3e3-e6f05ffdb8bf.png)
 - Each entry is connected to a field you have to fill or pick in the form. I only had one field in my test form but you can find an example with multiple fields below. After obtaining the entry ID, append this to your original url without the `usp=sf_link`. Here is also where you'll append your response in the url. In our example, the url would be https://docs.google.com/forms/d/e/1FAIpQLSejzmFmE8b2CidvukmZ6Y4ZjMxnkesZlZ6LX6rKr1XsJGRHIg/viewform?entry.768086295=Hello and Hello is what we're inputting in the field.
+- To input more than one word as your answer, simply add a `+` between the words. Here's an example - https://docs.google.com/forms/d/e/1FAIpQLSejzmFmE8b2CidvukmZ6Y4ZjMxnkesZlZ6LX6rKr1XsJGRHIg/viewform?entry.768086295=Hello+how+are+you+doing
 - You'll also have to change `"viewForm"` in the url to `"formResponse"`. For our example - https://docs.google.com/forms/d/e/1FAIpQLSejzmFmE8b2CidvukmZ6Y4ZjMxnkesZlZ6LX6rKr1XsJGRHIg/formResponse?entry.768086295=Hello
 - And there's your pre-filled url. 
 
