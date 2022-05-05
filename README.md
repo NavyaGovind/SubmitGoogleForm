@@ -14,7 +14,7 @@ I used Google App Scripts to run this. I'm not sure if there's a way to submit t
 
 ![image](https://user-images.githubusercontent.com/76686946/164062352-fdc29dac-41c9-418f-a3e3-e6f05ffdb8bf.png)
 - Each entry is connected to a field you have to fill or pick in the form. I only had one field in my test form but you can find an example with multiple fields below. After obtaining the entry ID, append this to your original url without the `usp=sf_link`. Here is also where you'll append your response in the url. In our example, the url would be https://docs.google.com/forms/d/e/1FAIpQLSejzmFmE8b2CidvukmZ6Y4ZjMxnkesZlZ6LX6rKr1XsJGRHIg/viewform?entry.768086295=Hello and Hello is what we're inputting in the field.
-- You'll also have to change `viewForm` in the url to `formResponse`. For our example - https://docs.google.com/forms/d/e/1FAIpQLSejzmFmE8b2CidvukmZ6Y4ZjMxnkesZlZ6LX6rKr1XsJGRHIg/formResponse?entry.768086295=Hello
+- You'll also have to change `"viewForm"` in the url to `"formResponse"`. For our example - https://docs.google.com/forms/d/e/1FAIpQLSejzmFmE8b2CidvukmZ6Y4ZjMxnkesZlZ6LX6rKr1XsJGRHIg/formResponse?entry.768086295=Hello
 - And there's your pre-filled url. 
 
 - As promised, here's an example with multiple fields - 
@@ -30,10 +30,9 @@ Once you have your pre filled url, replace it in the `Variables.gs` file (preFil
 Find your timezone from the following list - http://worldtimeapi.org/api/timezone/. Some examples of timezones include - "Europe/Amsterdam", "Asia/Dubai". Once you have your timezone, replace it in the `Variables.gs` file (timeZone).
  
 ### Step 3: Setting max values
-`maxLoopTime` is how often you'll receive an update about the current time and the time your google form will be submitted at. By default, it is set to 30 seconds.   
-`maxTotalLoopTime` is how long you'd like to run the script. By default, it is set to  5 minutes.
+`updateTime` is how often you'll receive an update about the current time and the time your google form will be submitted at. By default, it is set to 30 seconds.   
 
-You are free to modify both these values in the `Variables.gs` file.
+You are free to modify this value in the `Variables.gs` file.
 
 ### Step 4: Choose input method
 There are two ways to specify when you'd like to submit the form. 
