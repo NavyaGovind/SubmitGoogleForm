@@ -53,10 +53,3 @@ If you'd like to go with the second way, set dtInNumber to 0 and dateStr to the 
 ### Step 5: Run the main function (Main.gs)
 
 ![image](https://user-images.githubusercontent.com/76686946/164066100-5bd58edd-1104-4251-b46f-24e1754403aa.png)
-
-## INSPIRATION: Why make this?
-The professors of a course(Computing Science: Ethical and Professional Issues) had a Pi day challenge. This involved submitting a filled google form at pi time. I didn't code this for the challenge but I did it after the professor asked me if I did. This was surely the better way to do it, it wouldn't have ruined my sleep.
-
-## FEEDBACK/ QUESTIONS:
-Can you think of a way to make this better (you probably can) or do you have questions regarding any aspects of SGF?  
-Feel free to drop me an email gnavya.2712@gmail.com
