@@ -5,7 +5,7 @@ SGF is used to automatically submit a google form at a specific time.
 
 ## HOW TO USE IT?
 
-I used Google App Scripts to run this. I'm not sure if there's a way to submit the form without using scripts but do try and let me know if there's a way. All you really have to do is run the main function BUT before that, you need to initialise some variables in the `Variables.gs` file.
+Use Google App Scripts to run this. All you really have to do is run the main function BUT before that, you need to initialise some variables in the `Variables.gs` file.
 
 ### Step 1: Pre filled google form link
 - First, you get the link to fill in the form. Here's an example - https://docs.google.com/forms/d/e/1FAIpQLSejzmFmE8b2CidvukmZ6Y4ZjMxnkesZlZ6LX6rKr1XsJGRHIg/viewform?usp=sf_link
